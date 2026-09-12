@@ -1,7 +1,7 @@
 <?php
 /**
- * Maelekezo ya role kwa mtumiaji wa dashboard.
- * Haya yanafuata majukumu yaliyowekwa kwenye concept note ya Bugando ICT HelpDesk.
+ * Role guidance shown on each dashboard.
+ * These responsibilities follow the Bugando ICT HelpDesk concept note.
  */
 function role_guidance($role)
 {

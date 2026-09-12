@@ -23,7 +23,7 @@ $department_report = $pdo->query("SELECT COALESCE(d.name, 'Unassigned') AS depar
 $performance_report = $pdo->query("SELECT u.full_name, COUNT(t.id) AS assigned, SUM(t.status IN ('resolved', 'closed')) AS resolved, ROUND(AVG(CASE WHEN t.resolved_at IS NOT NULL THEN TIMESTAMPDIFF(HOUR, t.created_at, t.resolved_at) END), 1) AS avg_resolution_hours FROM users u LEFT JOIN tickets t ON t.assigned_to = u.id WHERE u.role = 'technician' GROUP BY u.id, u.full_name ORDER BY resolved DESC")->fetchAll(PDO::FETCH_ASSOC);
 $time_report = $pdo->query("SELECT ROUND(AVG(CASE WHEN assigned_to IS NOT NULL THEN TIMESTAMPDIFF(MINUTE, created_at, updated_at) END), 1) AS avg_response_minutes, ROUND(AVG(CASE WHEN resolved_at IS NOT NULL THEN TIMESTAMPDIFF(HOUR, created_at, resolved_at) END), 1) AS avg_resolution_hours FROM tickets")->fetch(PDO::FETCH_ASSOC);
 
-// Admin actions: user management na kuongeza idara.
+// Admin actions: user management and department creation.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     if ($action === 'add_department') {
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="fs-3 fw-bold text-success"><?= $resolved_tickets ?></div>
                         </div>
                     </div>
-                    <div class="col-md-3"><div class="card stat-card p-3"><div class="text-muted small">Yaliyopandishwa ngazi</div><div class="fs-3 fw-bold text-danger"><?= $escalated_tickets ?></div></div></div>
+                    <div class="col-md-3"><div class="card stat-card p-3"><div class="text-muted small">Escalated</div><div class="fs-3 fw-bold text-danger"><?= $escalated_tickets ?></div></div></div>
                 </div>
 
                 <div class="alert alert-info mt-4 small">

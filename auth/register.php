@@ -1,21 +1,20 @@
 <?php
 /**
  * ==========================================================
- * TENGENEZA ACCOUNT - kwa watumishi wa Bugando
+ * CREATE ACCOUNT - for Bugando staff
  * Bugando Medical Centre - ICT HelpDesk System
  * ==========================================================
- * Watumishi wanaweza kutengeneza account, kuingia na kuripoti
- * changamoto za huduma za ICT.
+ * Staff can create an account, sign in, and report ICT service issues.
  *
- * Account za Admin, HelpDesk na Technician hutengenezwa na Admin.
- * Registration ya kawaida humuweka mtumiaji kwenye role ya staff.
+ * Admin, HelpDesk, and Technician accounts are created by an Admin.
+ * Public registration assigns the staff role.
  */
 
 require_once '../config/db.php';
 require_once '../includes/functions.php';
 start_session_safe();
 
-// Mtumiaji aliyeingia hahitaji kutengeneza account tena.
+// An authenticated user does not need to create another account.
 if (isset($_SESSION['user_id'])) {
     redirect_to_dashboard($_SESSION['role']);
 }
@@ -23,7 +22,7 @@ if (isset($_SESSION['user_id'])) {
 $error   = '';
 $success = '';
 
-// Leta idara za kuonyesha kwenye fomu ya registration.
+// Load departments for the registration form.
 $departments = $pdo->query("SELECT id, name FROM departments ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -35,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password      = $_POST['password'] ?? '';
     $confirm       = $_POST['confirm_password'] ?? '';
 
-    // Kagua taarifa za account iliyowasilishwa.
+    // Validate submitted account details.
     if ($full_name === '' || $username === '' || $password === '') {
         $error = 'Please enter your name, username, and password.';
     } elseif (strlen($password) < 6) {
@@ -43,17 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($password !== $confirm) {
         $error = 'Password and confirmation do not match.';
     } else {
-        // Username moja isitumiwe na account zaidi ya moja.
+        // Prevent duplicate usernames.
         $check = $pdo->prepare("SELECT id FROM users WHERE username = ?");
         $check->execute([$username]);
 
         if ($check->fetch()) {
             $error = 'That username is already in use. Please choose another.';
         } else {
-            // Hifadhi nenosiri kwa hash salama isiyoweza kusomeka moja kwa moja.
+            // Store the password as a secure one-way hash.
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Registration ya umma inaruhusu staff pekee.
+            // Public registration only allows the staff role.
             $stmt = $pdo->prepare(
                 "INSERT INTO users (full_name, username, email, password_hash, role, department_id)
                  VALUES (?, ?, ?, ?, 'staff', ?)"

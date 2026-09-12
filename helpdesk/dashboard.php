@@ -17,7 +17,7 @@ $filter_status = $_GET['status'] ?? 'open';
 $allowed_filters = ['open', 'pending', 'assigned', 'in_progress', 'escalated', 'resolved', 'closed'];
 if (!in_array($filter_status, $allowed_filters, true)) { $filter_status = 'open'; }
 
-// HelpDesk hukagua ticket, huweka category/priority, na huassign technician.
+// HelpDesk reviews tickets, sets category/priority, and assigns technicians.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id'])) {
     $ticket_id = (int) $_POST['ticket_id'];
     $action = $_POST['action'] ?? '';

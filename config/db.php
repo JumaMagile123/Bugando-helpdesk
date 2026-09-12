@@ -21,7 +21,7 @@ try {
         DB_PASS
     );
 
-    // Weka database errors ziende kama exceptions ili iwe rahisi kugundua tatizo.
+    // Throw database errors as exceptions for easier troubleshooting.
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 } catch (PDOException $e) {

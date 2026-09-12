@@ -1,7 +1,7 @@
 <?php
 /**
- * DASHBOARD YA STAFF
- * Staff anaweza kuwasilisha na kufuatilia maombi yake ya ICT.
+ * STAFF DASHBOARD
+ * Staff can submit and track their ICT requests.
  */
 require_once '../config/db.php';
 require_once '../includes/functions.php';
@@ -15,7 +15,7 @@ $selected_ticket = (int) ($_GET['ticket'] ?? 0);
 $departments = $pdo->query("SELECT id, name FROM departments ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 
-// Hii sehemu inashughulikia actions za Staff: kutuma ticket na feedback.
+// Handle staff actions: submitting tickets and feedback.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $ticket_id = (int) ($_POST['ticket_id'] ?? 0);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $update = $pdo->prepare("INSERT INTO ticket_updates (ticket_id, updated_by, note, status) VALUES (?, ?, ?, 'closed')");
                 $update->execute([$ticket_id, $_SESSION['user_id'], 'Requester provided feedback and closed the ticket.']);
                 log_audit($pdo, $_SESSION['user_id'], 'TICKET_CLOSED', 'Ticket ID: ' . $ticket_id);
-                $success = 'Asante. Maoni yako yamehifadhiwa na ticket imefungwa.';
+                $success = 'Thank you. Your feedback was saved and the ticket was closed.';
             }
         }
     } elseif ($action === 'submit') {
@@ -51,14 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'The selected priority is invalid.';
     } else {
         $ticket_no = 'BMC-' . date('Y') . '-' . str_pad((string) (ticket_count($pdo) + 1), 4, '0', STR_PAD_LEFT);
-        // Leta tickets za mtumishi huyu kwa ajili ya tracking.
+        // Load this staff member's tickets for tracking.
         $stmt = $pdo->prepare(
             "INSERT INTO tickets (ticket_no, user_id, department_id, category_id, location, description, priority)
              VALUES (?, ?, ?, ?, ?, ?, ?)"
         );
         $stmt->execute([$ticket_no, $_SESSION['user_id'], $department_id, $category_id, $location ?: null, $description, $priority]);
         log_audit($pdo, $_SESSION['user_id'], 'TICKET_CREATED', $ticket_no);
-        $success = "Ombi lako limetumwa. Namba ya ticket ni $ticket_no.";
+        $success = "Your request was submitted. The ticket number is $ticket_no.";
     }
     }
 }

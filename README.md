@@ -4,7 +4,7 @@
 
 Technology stack: Core PHP, MySQL and Bootstrap 5, as outlined in the concept note.
 
-## Muundo wa mradi
+## Project structure
 ```
 bugando-helpdesk/
 ├── admin/dashboard.php        # Admin dashboard with live ticket summary
@@ -22,11 +22,11 @@ bugando-helpdesk/
 └── index.php                  # Public homepage and login page
 ```
 
-## Jinsi ya kuanzisha (setup)
+## Setup
 
 1. **Database**: Open phpMyAdmin/MySQL and import `database/schema.sql`.
 2. **Config**: Open `config/db.php` and set the correct MySQL credentials.
-3. **Demo login accounts**: baada ya ku-import schema, zote zinatumia password `Password123`.
+3. **Demo login accounts**: after importing the schema, all accounts use the password `Password123`.
    - `admin` → Admin dashboard, reports/summary and system oversight
    - `helpdesk1` → HelpDesk queue, prioritization and technician assignment
    - `tech1` → Technician workbench and assigned jobs

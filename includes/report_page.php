@@ -1,5 +1,5 @@
 <?php
-/** Ukurasa wa reports na download kwa role zinazohusika. */
+/** Report and download page for the authorized roles. */
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/report_export.php';

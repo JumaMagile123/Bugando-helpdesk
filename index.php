@@ -1,22 +1,22 @@
 <?php
 /**
  * ==========================================================
- * HOMEPAGE YA UMMA NA LOGIN
+ * PUBLIC HOMEPAGE AND LOGIN
  * Bugando Medical Centre - ICT Service Request & HelpDesk System
  * ==========================================================
- * Kila mtumiaji huanzia hapa. Baada ya login, mtumiaji hupelekwa
- * kwenye dashboard inayolingana na role yake.
+ * Every user starts here. After login, users are sent to the dashboard
+ * that matches their role.
  */
 
 require_once 'includes/functions.php';
 start_session_safe();
 
-// Mpeleke mtumiaji aliyeingia kwenye dashboard yake.
+// Send authenticated users to their dashboard.
 if (isset($_SESSION['user_id'])) {
     redirect_to_dashboard($_SESSION['role']);
 }
 
-// Onyesha ujumbe wa kosa la login kama upo.
+// Display a login error when one is present.
 $error = $_SESSION['login_error'] ?? '';
 unset($_SESSION['login_error']);
 ?>

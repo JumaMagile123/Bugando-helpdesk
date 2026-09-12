@@ -55,6 +55,16 @@ function start_session_safe()
                 'Bado hujawasilisha ombi.' => 'You have not submitted a request yet.',
                 'Tengeneza account' => 'Create an account',
                 'Ingia' => 'Sign in',
+                'Pakua report ya tickets zinazoruhusiwa kwa role yako.' => 'Download the ticket report available to your role.',
+                'Maelezo mazuri humsaidia technician kuanza haraka.' => 'A clear description helps the technician start quickly.',
+                'Eleza tatizo kwa ufupi...' => 'Briefly describe the issue...',
+                'Bado hujawasilisha ombi.' => 'You have not submitted a request yet.',
+                'Ombi limetumwa. Namba ya ticket ni' => 'Request submitted. Ticket number:',
+                'Asante. Maoni yako yamehifadhiwa na ticket imefungwa.' => 'Thank you. Your feedback was saved and the ticket was closed.',
+                'Bora sana' => 'Excellent',
+                'Nzuri' => 'Good',
+                'Haijakidhi' => 'Unsatisfactory',
+                'Mbaya' => 'Poor',
             ]);
         });
         $english_ui_enabled = true;

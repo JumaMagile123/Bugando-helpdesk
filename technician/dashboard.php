@@ -1,7 +1,7 @@
 <?php
 /**
- * DASHBOARD YA TECHNICIAN / OFFICER
- * Inaonekana kwa mtumiaji mwenye role ya technician pekee.
+ * TECHNICIAN / OFFICER DASHBOARD
+ * Visible only to users with the technician role.
  */
 require_once '../config/db.php';
 require_once '../includes/functions.php';
@@ -14,7 +14,7 @@ $resolved_by_me = ticket_count($pdo, 'assigned_to = ? AND status IN (\'resolved\
 $escalated_by_me = ticket_count($pdo, 'assigned_to = ? AND status = \'escalated\'', [$_SESSION['user_id']]);
 $supervisors = $pdo->query("SELECT id, full_name FROM users WHERE role IN ('admin', 'helpdesk') AND status = 'active' ORDER BY full_name")->fetchAll(PDO::FETCH_ASSOC);
 
-// Technician huandika progress, huweka resolved, au hu-escalate ticket.
+// Technicians record progress, resolve tickets, or escalate them.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id'])) {
     $ticket_id = (int) $_POST['ticket_id'];
     $action = $_POST['action'] ?? '';

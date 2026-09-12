@@ -1,8 +1,8 @@
 <?php
 /**
- * Report helper rahisi kwa Admin, HelpDesk na Technician.
- * Excel hutolewa kama HTML table inayofunguka moja kwa moja kwenye Excel.
- * PDF inatengenezwa hapa kwa PHP bila library kubwa ya ziada.
+ * Report helper for Admin, HelpDesk, and Technician roles.
+ * Excel reports are generated as HTML tables that open directly in Excel.
+ * PDF reports are generated in PHP without a large additional library.
  */
 function report_rows($pdo, $role, $user_id)
 {
