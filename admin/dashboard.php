@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="p-4" id="system-summary">
                 <p class="text-muted">Bugando Medical Centre system summary.</p>
-                <div class="card panel-card mb-4 p-3"><h6><i class="bi bi-person-check me-2"></i><?= $guidance['title'] ?></h6><div class="row small"><div class="col-md-6"><strong>Anachoweza kufanya</strong><ul class="mb-0"><?php foreach ($guidance['can'] as $item): ?><li><?= clean_input($item) ?></li><?php endforeach; ?></ul></div><div class="col-md-6"><strong>Asichopaswa kufanya</strong><ul class="mb-0"><?php foreach ($guidance['cannot'] as $item): ?><li><?= clean_input($item) ?></li><?php endforeach; ?></ul></div></div></div>
+                <div class="card panel-card mb-4 p-3"><h6><i class="bi bi-person-check me-2"></i><?= $guidance['title'] ?></h6><div class="row small"><div class="col-md-6"><strong>Can do</strong><ul class="mb-0"><?php foreach ($guidance['can'] as $item): ?><li><?= clean_input($item) ?></li><?php endforeach; ?></ul></div><div class="col-md-6"><strong>Cannot do</strong><ul class="mb-0"><?php foreach ($guidance['cannot'] as $item): ?><li><?= clean_input($item) ?></li><?php endforeach; ?></ul></div></div></div>
 
                 <!-- Summary cards are populated from live database data. -->
                 <div class="row g-3">

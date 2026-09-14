@@ -19,7 +19,7 @@ function role_guidance($role)
         'technician' => [
             'title' => 'Technician / Officer responsibilities',
             'can' => ['View assigned work', 'Accept and start work', 'Add progress notes and resolution details', 'Escalate complex issues to HelpDesk/Admin'],
-            'cannot' => ['Kuchukua ticket ambayo haijapangiwa yeye', 'Kumpangia technician mwingine ticket', 'Kufuta history au audit trail'],
+            'cannot' => ['Take a ticket that is not assigned to them', 'Assign a ticket to another technician', 'Delete the history or audit trail'],
         ],
         'admin' => [
             'title' => 'Administrator responsibilities',

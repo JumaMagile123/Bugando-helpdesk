@@ -82,25 +82,25 @@ $my_jobs = $my_jobs_stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="card stat-card p-3">
-                            <div class="text-muted small">Nilizopangiwa</div>
+                            <div class="text-muted small">Assigned to me</div>
                             <div class="fs-3 fw-bold text-primary"><?= $assigned_to_me ?></div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card stat-card p-3">
-                            <div class="text-muted small">Zinazoshughulikiwa</div>
+                            <div class="text-muted small">In progress</div>
                             <div class="fs-3 fw-bold text-info"><?= $in_progress ?></div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card stat-card p-3">
-                            <div class="text-muted small">Nilizotatua</div>
+                            <div class="text-muted small">Resolved by me</div>
                             <div class="fs-3 fw-bold text-success"><?= $resolved_by_me ?></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card panel-card mt-4 p-4" id="assigned-jobs"><div class="d-flex justify-content-between align-items-center mb-2"><h5 class="mb-0">Kazi nilizopangiwa</h5><span class="small text-muted">Foleni ya kazi</span></div>
+                <div class="card panel-card mt-4 p-4" id="assigned-jobs"><div class="d-flex justify-content-between align-items-center mb-2"><h5 class="mb-0">Assigned jobs</h5><span class="small text-muted">Work queue</span></div>
                     <?php if (!$my_jobs): ?><div class="empty-state py-4"><i class="bi bi-check2-circle"></i><p>Hakuna kazi mpya ulizopangiwa.</p></div><?php else: ?><div class="table-responsive"><table class="table align-middle small"><thead><tr><th>Ticket</th><th>Aliyeripoti / Tatizo</th><th>Maendeleo</th><th>Pandisha ngazi</th></tr></thead><tbody><?php foreach ($my_jobs as $job): ?><tr><td class="fw-semibold text-primary"><?= clean_input($job['ticket_no']) ?><br><span class="text-muted fw-normal"><?= clean_input($job['department_name'] ?? '') ?></span><br><span class="status-pill status-<?= clean_input($job['status']) ?>"><?= clean_input(sw_status($job['status'])) ?></span></td><td><?= clean_input($job['full_name']) ?><br><?= clean_input(mb_strimwidth($job['description'], 0, 48, '...')) ?></td><td><form method="POST"><input type="hidden" name="ticket_id" value="<?= $job['id'] ?>"><input type="hidden" name="action" value="status"><textarea name="note" class="form-control form-control-sm mb-1" rows="2" placeholder="Andika maendeleo au utatuzi" required></textarea><div class="d-flex gap-1"><select name="status" class="form-select form-select-sm"><option value="in_progress">Inaendelea</option><option value="resolved">Imetatuliwa</option></select><button class="btn btn-sm btn-bmc">Hifadhi</button></div></form></td><td><form method="POST"><input type="hidden" name="ticket_id" value="<?= $job['id'] ?>"><input type="hidden" name="action" value="escalate"><select name="escalated_to" class="form-select form-select-sm mb-1"><option value="">Pandisha kwa</option><?php foreach ($supervisors as $supervisor): ?><option value="<?= $supervisor['id'] ?>"><?= clean_input($supervisor['full_name']) ?></option><?php endforeach; ?></select><textarea name="note" class="form-control form-control-sm mb-1" rows="2" placeholder="Sababu ya kupandisha ngazi" required></textarea><button class="btn btn-sm btn-outline-danger">Pandisha</button></form></td></tr><?php endforeach; ?></tbody></table></div><?php endif; ?>
                 </div>
             </div>
